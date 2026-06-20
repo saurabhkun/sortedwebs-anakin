@@ -12,6 +12,10 @@
 [![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase)](https://firebase.google.com/)
 [![Anakin AI](https://img.shields.io/badge/Anakin_AI-FF5722?style=for-the-badge&logo=sparkles&logoColor=white)](https://anakin.ai)
 
+<p align="center">
+  <img src="./assets/banner.png" width="100%" alt="SortedWebs Banner">
+</p>
+
 ---
 
 ### 🏆 Built for Anakin Blitz 2026
@@ -74,8 +78,6 @@ graph TD
 
 ## 🖼️ Screenshots
 
-*Placeholders for product walkthrough screenshots:*
-
 #### 🏠 Personal Knowledge Library
 <p align="center">
   <img src="./assets/Library.png" width="90%" alt="Personal Library Dashboard">
@@ -89,6 +91,11 @@ graph TD
 #### 🗂️ Curated Stacks & Explore
 <p align="center">
   <img src="./assets/Explore.png" width="90%" alt="Explore Collections">
+</p>
+
+#### 📚 Custom Stacks Creation
+<p align="center">
+  <img src="./assets/Stacks.png" width="90%" alt="Stacks Creation View">
 </p>
 
 ---
@@ -112,7 +119,7 @@ sortedwebs/
 │   ├── services/           # anakinService.ts (Submit + Poll + Local parsers)
 │   ├── lib/                # Firebase configuration & initialization
 │   ├── pages/              # Dashboard, Explore, collections view
-│   ├── App.tsx             # Main routing & Auth guards
+│   ├── App.tsx             # Main router configuration
 │   └── index.css           # Global typography & Tailwind styles
 ├── firestore.rules         # Security rules for data isolation
 ├── .env.example            # Environment variables template
