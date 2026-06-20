@@ -1,4 +1,4 @@
-import { Trash2, ExternalLink, Heart, Clock } from 'lucide-react';
+import { Trash2, ExternalLink, Heart, Clock, Sparkles, Tag } from 'lucide-react';
 import { Website } from '../hooks/useWebsites';
 
 interface WebsiteCardProps {
@@ -12,7 +12,12 @@ const categoryStyles: Record<string, string> = {
   Design:        'bg-[#f0eadd]',
   'Dev Tools':   'bg-[#f2efe4]',
   Entertainment: 'bg-[#e7d6c4]',
-  'AI Tools':    'bg-editorial-accent',
+  'AI Tools':    'bg-editorial-accent/30',
+  Learning:      'bg-[#d6e4df]',
+  Finance:       'bg-[#e8d5e1]',
+  Productivity:  'bg-[#d8e0e8]',
+  Social:        'bg-[#e8dec0]',
+  News:          'bg-[#e8e0d8]',
 };
 
 const defaultStyle = 'bg-editorial-bg';
@@ -25,63 +30,113 @@ function getDomainFromUrl(url: string) {
 function formatDate(dateObj: any) {
   try {
     if (!dateObj) return '';
-    // Handle Firestore Timestamp
     const date = dateObj.toDate ? dateObj.toDate() : new Date(dateObj);
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   } catch { return ''; }
 }
 
 export default function WebsiteCard({ website, onDelete, onToggleFavorite }: WebsiteCardProps) {
-  const bgClass = categoryStyles[website.category] || defaultStyle;
-  const domain = getDomainFromUrl(website.url);
-  const date = formatDate(website.createdAt);
+  const bgClass = categoryStyles[website.category ?? ''] || defaultStyle;
+  const domain  = getDomainFromUrl(website.url);
+  const date    = formatDate(website.createdAt);
+
+  /* Display: prefer AI summary > description > nothing */
+  const bodyText = website.summary || website.description || null;
+
+  /* Tags to display (max 3) */
+  const visibleTags = (website.tags || []).slice(0, 3);
 
   return (
-    <div className={`group border border-editorial-text/15 flex flex-col h-full transition-colors hover:border-editorial-text/40 ${bgClass}`}>
-      {/* Header */}
+    <div
+      className={`group border border-editorial-text/15 flex flex-col h-full transition-all duration-200
+                  hover:border-editorial-text/40 hover:-translate-y-0.5 ${bgClass}`}
+    >
+      {/* ── Header ── */}
       <div className="p-6 pb-4 flex items-start justify-between gap-4">
         <div className="flex-1 min-w-0">
+          {/* Category badge + domain */}
           <div className="flex items-center gap-2 mb-3">
             <span className="text-xs uppercase tracking-widest text-editorial-text/60 font-sans">
               {website.category || 'Uncategorized'}
             </span>
-            <span className="w-1 h-1 bg-editorial-text/20 rounded-full"></span>
+            <span className="w-1 h-1 bg-editorial-text/20 rounded-full" />
             <span className="text-xs uppercase tracking-widest text-editorial-text/40 font-sans truncate">
               {domain}
             </span>
+
+            {/* AI badge */}
+            {website.aiPowered && (
+              <>
+                <span className="w-1 h-1 bg-editorial-text/20 rounded-full" />
+                <span className="flex items-center gap-1 text-[10px] text-editorial-accent font-sans uppercase tracking-widest">
+                  <Sparkles className="w-2.5 h-2.5" />
+                  AI
+                </span>
+              </>
+            )}
           </div>
-          <h3 className="text-2xl font-serif text-editorial-text truncate leading-tight group-hover:underline underline-offset-4 decoration-1">
+
+          <h3 className="text-xl font-serif text-editorial-text leading-tight group-hover:underline underline-offset-4 decoration-1 line-clamp-2">
             {website.title}
           </h3>
         </div>
       </div>
 
-      {/* Description */}
+      {/* ── Body: summary or description ── */}
       <div className="px-6 flex-grow">
-        {website.description ? (
+        {bodyText ? (
           <p className="text-sm text-editorial-text/70 line-clamp-3 leading-relaxed font-sans">
-            {website.description}
+            {bodyText}
           </p>
         ) : (
-          <p className="text-sm text-editorial-text/40 italic font-serif">
+          <p className="text-sm text-editorial-text/30 italic font-serif">
             No description available.
           </p>
         )}
       </div>
 
-      {/* Footer */}
-      <div className="p-6 pt-6 flex items-center justify-between border-t border-editorial-text/10 mt-6">
-        <div className="flex items-center gap-1 text-xs text-editorial-text/50 uppercase tracking-widest font-sans">
+      {/* ── Tags row ── */}
+      {visibleTags.length > 0 && (
+        <div className="px-6 pt-4 flex flex-wrap gap-1.5">
+          {visibleTags.map((tag) => (
+            <span
+              key={tag}
+              className="flex items-center gap-1 px-2 py-0.5 text-[10px] uppercase tracking-widest
+                         bg-editorial-text/5 border border-editorial-text/10 text-editorial-text/60 font-sans"
+            >
+              <Tag className="w-2.5 h-2.5" />
+              {tag}
+            </span>
+          ))}
+          {(website.tags?.length ?? 0) > 3 && (
+            <span className="px-2 py-0.5 text-[10px] uppercase tracking-widest text-editorial-text/40 font-sans">
+              +{(website.tags?.length ?? 0) - 3}
+            </span>
+          )}
+        </div>
+      )}
+
+      {/* ── Footer ── */}
+      <div className="p-6 pt-4 flex items-center justify-between border-t border-editorial-text/10 mt-4">
+        <div className="flex items-center gap-3 text-xs text-editorial-text/50 font-sans">
           {date && (
-            <>
-              <Clock className="w-3.5 h-3.5 mr-1" />
+            <span className="flex items-center gap-1 uppercase tracking-widest">
+              <Clock className="w-3.5 h-3.5" />
               {date}
+            </span>
+          )}
+          {website.readingTime && (
+            <>
+              {date && <span className="text-editorial-text/20">·</span>}
+              <span className="flex items-center gap-1 uppercase tracking-widest">
+                {website.readingTime}
+              </span>
             </>
           )}
         </div>
 
         <div className="flex items-center gap-3">
-          {/* Favorite button */}
+          {/* Favorite */}
           <button
             id={`favorite-btn-${website.id}`}
             onClick={() => onToggleFavorite(website.id, !website.is_favorite)}

@@ -15,6 +15,13 @@ export interface Website {
   tags?: string[];
   createdAt?: any;
   updatedAt?: any;
+
+  /* ── Anakin AI-generated fields ── */
+  summary?: string;           // 2-3 sentence AI summary
+  keyTakeaways?: string[];    // Up to 5 actionable insights
+  readingTime?: string;       // e.g. "4 min read"
+  analyzedAt?: string;        // ISO timestamp of analysis
+  aiPowered?: boolean;        // true = analyzed by Anakin
 }
 
 export function useWebsites() {

@@ -6,7 +6,7 @@ import { useWebsites } from '../hooks/useWebsites';
 import { BookOpen } from 'lucide-react';
 
 export default function Dashboard() {
-  const { websites, loading, deleteWebsite, updateWebsite, seedInitialLinks } = useWebsites();
+  const { websites, loading, deleteWebsite, updateWebsite } = useWebsites();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const location = useLocation();
@@ -34,7 +34,12 @@ export default function Dashboard() {
         (w) =>
           w.title.toLowerCase().includes(query) ||
           (w.description?.toLowerCase() || '').includes(query) ||
-          w.url.toLowerCase().includes(query)
+          w.url.toLowerCase().includes(query) ||
+          /* Anakin AI fields */
+          (w.summary?.toLowerCase() || '').includes(query) ||
+          (w.category?.toLowerCase() || '').includes(query) ||
+          (w.tags || []).some((tag) => tag.toLowerCase().includes(query)) ||
+          (w.keyTakeaways || []).some((kt) => kt.toLowerCase().includes(query))
       );
     }
     return filtered;
@@ -108,7 +113,7 @@ export default function Dashboard() {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {filteredWebsites.map((website, i) => (
+              {filteredWebsites.map((website) => (
                 <div key={website.id} className="h-full">
                   <WebsiteCard
                     website={website}

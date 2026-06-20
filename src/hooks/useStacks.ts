@@ -10,6 +10,7 @@ export interface Stack {
   title: string;
   description: string | null;
   isPublic: boolean;
+  category?: string;
   createdAt: any;
   links: Website[];
 }
