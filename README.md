@@ -1,23 +1,20 @@
 <div align="center">
 
-# 🚀 SortedWebs
+# 🚀 SortedWebs (Anakin Edition)
 
-> **The Personal Web Library & Curator.**  
-> Save. Organize. Discover. Share.
+> **AI-Powered Knowledge Library & Curator.**  
+> Turn simple bookmarks into summarized, tagged, categorized, and searchable knowledge resources.
 
 [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
 [![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev)
 [![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase)](https://firebase.google.com/)
-[![Firestore](https://img.shields.io/badge/Firestore-FFA000?style=for-the-badge&logo=firebase&logoColor=white)](https://firebase.google.com/products/firestore)
-[![MIT License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](https://choosealicense.com/licenses/mit/)
-[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/saurabhkun)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/saurabh-gandhi-1421b2318/)
+[![Anakin AI](https://img.shields.io/badge/Anakin_AI-FF5722?style=for-the-badge&logo=sparkles&logoColor=white)](https://anakin.ai)
 
-<p align="center">
-  <img src="./assets/banner.png" width="100%" alt="SortedWebs Banner">
-</p>
+---
+
+### 🏆 Built for Anakin Blitz 2026
 
 </div>
 
@@ -25,96 +22,82 @@
 
 ## 📖 Overview
 
-**The Problem:** We save hundreds of useful websites, articles, and tools every month - but when we actually need them, they are lost in chaotic browser bookmarks or scattered across dozens of different apps.
+### ⚠️ The Problem
+Every day developers, students, researchers, and creators save dozens of useful links. Over time, these bookmarks become impossible to manage because they contain no context, no organization, and no way to quickly rediscover knowledge. They are simply raw, forgotten URLs.
 
-**The Solution:** SortedWebs helps you build a clean, intelligent personal web library. With smart categorization, curated stacks, and public collections, discovering and organizing knowledge has never felt this premium.
-
----
-
-## 📚 Personal Library
-
-Save websites instantly and organize them forever. Never lose a valuable link again.
-
-<p align="center">
-  <img src="./assets/Library.png" width="90%" alt="Library">
-</p>
+### 💡 The Solution
+**SortedWebs** transforms a simple bookmark manager into a premium, searchable knowledge resource. By integrating the **Anakin Universal Scraper REST API**, SortedWebs fetches full page content on demand, parses it locally to extract metadata, and automatically generates:
+- 📝 A 2-sentence clean summary (max 220 characters).
+- 🏷️ Custom context-aware tags.
+- 🗂️ A category classification (e.g., Dev Tools, Learning, AI Tools).
+- ⏱️ An estimated reading time.
 
 ---
 
-## ➕ Add Resources
+## ⚡ Core Anakin Workflow
 
-Capture resources instantly. Add links with metadata, categories, and tags.
+When you click **Analyze with Anakin**, SortedWebs initiates a multi-stage pipeline:
 
-<p align="center">
-  <img src="./assets/AddLink.png" width="90%" alt="Add Link">
-</p>
-
----
-
-## 🔍 Explore
-
-Discover curated resources. Explore useful collections and stacks shared by the community.
-
-<p align="center">
-  <img src="./assets/Explore.png" width="90%" alt="Explore">
-</p>
-
----
-
-## 🗂️ Collections & Stacks
-
-Build knowledge stacks. Group resources into focused collections tailored for developers, designers, and learners.
-
-<p align="center">
-  <img src="./assets/Stacks.png" width="90%" alt="Stacks">
-</p>
-
----
-
-## ⚙️ Core Capabilities
-
-- **🧠 Smart Category Suggestions:** Automatically suggests relevant categories directly from URLs and website metadata, saving you time.
-- **🔐 Authentication:** Rock-solid, secure Email + Password authentication powered entirely by Firebase.
-- **☁️ Cloud Sync:** All of your data is securely stored and managed in Firestore, providing reliable long-term persistence.
-- **⚡ Real-Time Updates:** Instant synchronization across all your sessions. What you save on one tab appears everywhere immediately.
-
----
-
-## 🏗 Architecture
-
-```text
-User
- │
- ▼
-React + TypeScript
- │
- ▼
-Firebase Authentication
- │
- ▼
-Firestore Database
- │
- ├── users/{uid}/links
- ├── users/{uid}/stacks
- └── publicStacks
+```mermaid
+graph TD
+    A[Paste URL] --> B[Click 'Analyze with Anakin']
+    B --> C[POST /url-scraper to Submit Job]
+    C --> D[Poll GET /url-scraper/jobId]
+    D -- Completed --> E[Extract Raw Content / Markdown]
+    E --> F[Run Local Title, Summary & Tag Parsers]
+    F --> G[Auto-fill Form & Render Insights Panel]
+    G --> H[Click 'Save with AI Insights']
+    H --> I[Store in Firestore with AI metadata]
 ```
 
+1. **Submit Job:** The application submits the URL to the Anakin Universal Scraper (`POST /url-scraper`).
+2. **Poll Status:** The application polls (`GET /url-scraper/{jobId}`) until the scrape is completed.
+3. **Local Parser:** SortedWebs extracts page text and filters navigation boilerplate, image link tags, and cookie banners.
+4. **Generate Metadata:**
+   - **Title:** Extracted from parsed `<title>` tags, markdown headings, or capitalized domains.
+   - **Summary:** First 2 sentences of clean prose.
+   - **Tags:** Curated keywords derived from domains and page terms.
+   - **Category:** Assigned based on domain rules and content flags.
+
 ---
 
-## 🛠 Tech Stack
+## ✨ Features
 
-**Frontend:**
-- ⚛️ [React](https://react.dev)
-- 📘 [TypeScript](https://www.typescriptlang.org)
-- ⚡ [Vite](https://vitejs.dev)
-- 💅 [Tailwind CSS](https://tailwindcss.com)
+- **🧠 Auto-filled Form Fields:** Scraping metadata instantly populates the title, tags, category, and summary fields.
+- **⚡ AI Insights Preview:** Review summary highlights and key takeaways in the modal before committing a bookmark to the library.
+- **🛡️ Stale Tags Protection:** Form states are cleared on every new click to prevent carrying over metadata from previous analyses.
+- **🔐 Authentication:** Full user isolation powered by Firebase Auth.
+- **☁️ Cloud Sync & Real-Time Updates:** Instant synchronization across tabs with Firestore.
+- **🔍 Expanded Search:** Search matching looks through titles, tags, summaries, categories, and key takeaways for instant discovery.
 
-**Backend:**
-- 🔐 [Firebase Authentication](https://firebase.google.com/products/auth)
-- 🗄️ [Firestore Database](https://firebase.google.com/products/firestore)
+---
 
-**Deployment:**
-- 🚀 [Vercel](https://vercel.com)
+## 🖼️ Screenshots
+
+*Placeholders for product walkthrough screenshots:*
+
+#### 🏠 Personal Knowledge Library
+<p align="center">
+  <img src="./assets/Library.png" width="90%" alt="Personal Library Dashboard">
+</p>
+
+#### ✦ Add Links with Anakin AI
+<p align="center">
+  <img src="./assets/AddLink.png" width="90%" alt="AI Analysis Modal">
+</p>
+
+#### 🗂️ Curated Stacks & Explore
+<p align="center">
+  <img src="./assets/Explore.png" width="90%" alt="Explore Collections">
+</p>
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend:** React, TypeScript, Vite, Tailwind CSS, Lucide Icons, Mermaid.js
+- **Backend:** Firebase (Auth, Firestore)
+- **Scraper / AI Workflow:** [Anakin Universal Scraper REST API](https://anakin.ai)
 
 ---
 
@@ -122,16 +105,18 @@ Firestore Database
 
 ```text
 sortedwebs/
-├── public/                 # Static assets
+├── public/                 # Static public assets
 ├── src/
-│   ├── components/         # Reusable UI components
-│   ├── hooks/              # Custom React hooks (auth, db interactions)
-│   ├── lib/                # Config files (Firebase, curated datasets)
-│   ├── pages/              # Application views (Dashboard, Explore, etc.)
-│   ├── App.tsx             # Main router configuration
-│   └── index.css           # Global Tailwind and base styles
-├── firestore.rules         # Security rules for Firestore access
-└── package.json            # Project dependencies and scripts
+│   ├── components/         # AddLinkFab (w/ Anakin flow), WebsiteCard, etc.
+│   ├── hooks/              # useWebsites (Firestore writes), useStacks, etc.
+│   ├── services/           # anakinService.ts (Submit + Poll + Local parsers)
+│   ├── lib/                # Firebase configuration & initialization
+│   ├── pages/              # Dashboard, Explore, collections view
+│   ├── App.tsx             # Main routing & Auth guards
+│   └── index.css           # Global typography & Tailwind styles
+├── firestore.rules         # Security rules for data isolation
+├── .env.example            # Environment variables template
+└── package.json            # Scripts & configurations
 ```
 
 ---
@@ -140,86 +125,63 @@ sortedwebs/
 
 ### Installation
 
-Clone the repository and install the required dependencies:
+1. **Clone the repository:**
+   ```bash
+   git clone <repo-url>
+   cd sortedwebs
+   ```
 
-```bash
-git clone <repo>
-cd sortedwebs
-npm install
-npm run dev
-```
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-### Environment Variables
+3. **Setup environment variables:**
+   Copy `.env.example` to `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+   Fill in your Firebase credentials and your Anakin API Key:
+   ```env
+   VITE_FIREBASE_API_KEY=AIzaSy...
+   VITE_ANAKIN_API_KEY=your_key_here
+   ```
 
-Create a `.env` file in the root of your project and populate it with your Firebase configuration:
-
-```env
-VITE_FIREBASE_API_KEY=your_api_key
-VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
-VITE_FIREBASE_PROJECT_ID=your_project_id
-VITE_FIREBASE_STORAGE_BUCKET=your_storage_bucket
-VITE_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
-VITE_FIREBASE_APP_ID=your_app_id
-```
-
----
-
-## 🔥 Curated Starter Stacks
-
-Explore features pre-built curated bundles to get you started on day one:
-
-- **Frontend Starter Pack:** Essential tools and resources for modern web development.
-- **UI/UX Designer Kit:** Design inspiration, prototyping tools, and portfolio resources.
-- **AI Productivity Stack:** The best AI tools for research, writing, coding, and discovery.
-- **Competitive Programming Stack:** Practice platforms and references for interview prep.
-- **Indie Hacker Stack:** Everything you need to build, ship, and monetize side projects.
-- **Research Desk:** Useful research, paper discovery, and academic directories.
+4. **Start the local server:**
+   ```bash
+   npm run dev
+   ```
 
 ---
 
-## 🗺 Roadmap
+## 🎤 Presentation Demo Flow
 
-- [ ] **Browser Extension:** Save links directly from your browser.
-- [ ] **Public Profiles:** Share your custom library with the world.
-- [ ] **Team Collections:** Collaborative bookmarking for startups and teams.
-- [ ] **AI Summaries:** Automated one-sentence summaries for saved articles.
-- [ ] **Recommendation Engine:** Discover new content based on your library.
-- [ ] **Mobile App:** Access SortedWebs seamlessly on iOS and Android.
+Follow this flow for video demonstrations or live judge walkthroughs:
 
----
-
-## 🤝 Contributing
-
-We love contributions! Whether it's adding new features, fixing bugs, or improving documentation, your help is welcome.
-
-1. Fork the project.
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`).
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`).
-4. Push to the Branch (`git push origin feature/AmazingFeature`).
-5. Open a Pull Request.
+1. **The Dashboard:** Show the homepage populated with clean editorial cards.
+2. **Open Add Link:** Click the bottom-right `+` button.
+3. **Paste URL:** Enter `https://react.dev` into the input field.
+4. **Trigger Anakin:** Click `✦ Analyze`. Points out how the loading state updates.
+5. **Form Populate:** Show how the Title auto-populates as `"React"`, Category becomes `"Dev Tools"`, and Tags list `"react, javascript, frontend"`.
+6. **Save:** Save the card and show it instantly appearing on the dashboard with its "AI" badge.
+7. **Filter & Search:** Type `react` or click the `Dev Tools` category to demonstrate instant index filtering.
 
 ---
 
-## 👨‍💻 Author
+## 🔮 Future Scope
 
-Built with ❤️ by **Saurabh Gandhi**
-
-- GitHub: https://github.com/saurabhkun
-- LinkedIn: https://www.linkedin.com/in/saurabh-gandhi-1421b2318/
-- Email: saurabhgandhi016@gmail.com
-
----
-
-## 📬 Contact
-
-GitHub: https://github.com/saurabhkun
-
-LinkedIn: https://www.linkedin.com/in/saurabh-gandhi-1421b2318/
-
-Email: saurabhgandhi016@gmail.com
+- [ ] **Anakin LLM integration:** Leverage Anakin AI chatbots to generate custom contextual flashcards directly in the dashboard.
+- [ ] **Browser Extension:** One-click save to library from the browser bar.
+- [ ] **Collaborative Stacks:** Shared libraries for team curation.
+- [ ] **Offline Sync:** Local-first storage with background Firestore synchronization.
 
 ---
 
-## ⭐ Support
+## 👨‍💻 Credits & Author
 
-If you like the project, leave a star on GitHub. ⭐️
+Built for the **Anakin Blitz Hackathon 2026** by **Saurabh Gandhi**.
+
+- **GitHub:** [saurabhkun](https://github.com/saurabhkun)
+- **LinkedIn:** [Saurabh Gandhi](https://www.linkedin.com/in/saurabh-gandhi-1421b2318/)
+- **Email:** saurabhgandhi016@gmail.com
+- **Support:** If you love the project, please leave a star on GitHub! ⭐️
