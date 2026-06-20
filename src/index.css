@@ -1,0 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body {
+    @apply bg-editorial-bg text-editorial-text font-sans antialiased;
+  }
+
+  h1, h2, h3 {
+    @apply font-serif font-normal tracking-tight;
+  }
+
+  h4, h5, h6 {
+    @apply font-sans font-medium;
+  }
+
+  /* Minimal clean scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-editorial-surface border border-editorial-text/10;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-editorial-text/20;
+  }
+}
+
+@layer components {
+  /* ─── Editorial Card ─── */
+  .editorial-card {
+    @apply bg-editorial-bg border border-editorial-text/15 transition-all duration-300 relative overflow-hidden;
+  }
+
+  .editorial-card:hover {
+    @apply border-editorial-text/40 bg-[#faf6e6];
+    transform: translateY(-2px);
+  }
+
+  /* Secondary surface card (beige) */
+  .editorial-card-surface {
+    @apply bg-editorial-surface border border-editorial-text/15 transition-all duration-300;
+  }
+
+  .editorial-card-surface:hover {
+    @apply border-editorial-text/40 bg-[#dfceb9];
+    transform: translateY(-2px);
+  }
+
+  /* ─── Editorial Button ─── */
+  .btn-editorial {
+    @apply inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none;
+  }
+
+  .btn-editorial-primary {
+    @apply btn-editorial bg-editorial-text text-editorial-bg px-6 py-3 rounded-none border border-editorial-text hover:bg-editorial-text/90;
+  }
+
+  .btn-editorial-accent {
+    @apply btn-editorial bg-editorial-accent text-editorial-text px-6 py-3 rounded-none border border-editorial-text hover:bg-[#caba24];
+  }
+
+  .btn-editorial-ghost {
+    @apply btn-editorial border border-editorial-text/20 hover:border-editorial-text/60 text-editorial-text px-6 py-3 rounded-none bg-transparent hover:bg-editorial-text/5;
+  }
+
+  /* ─── Nav link ─── */
+  .nav-link {
+    @apply text-editorial-text/70 hover:text-editorial-text font-medium text-sm transition-colors duration-200 uppercase tracking-widest;
+  }
+
+  .nav-link-active {
+    @apply text-editorial-text border-b border-editorial-text pb-1;
+  }
+
+  /* ─── Input field ─── */
+  .input-editorial {
+    @apply w-full bg-transparent border-b border-editorial-text/30 text-editorial-text placeholder-editorial-text/40
+           px-0 py-3 text-base rounded-none
+           focus:outline-none focus:border-editorial-text
+           transition-all duration-200;
+  }
+
+  /* ─── Section divider ─── */
+  .section-divider {
+    @apply border-t border-editorial-text/15;
+  }
+}

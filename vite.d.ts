@@ -1,0 +1,9 @@
+// Minimal ambient declarations to satisfy TypeScript for build-time config files
+declare module 'vite' {
+  export function defineConfig(config: any): any;
+}
+
+declare module '@vitejs/plugin-react' {
+  const plugin: any;
+  export default plugin;
+}
