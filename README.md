@@ -36,6 +36,9 @@ Every day developers, students, researchers, and creators save dozens of useful 
 - 🗂️ A category classification (e.g., Dev Tools, Learning, AI Tools).
 - ⏱️ An estimated reading time.
 
+### Live Link
+https://sortedwebspro.netlify.app/
+
 ---
 
 ## ⚡ Core Anakin Workflow
